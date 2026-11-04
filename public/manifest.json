@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Calendar Checker",
+  "version": "0.0.1",
+  "description": "Eventi e promemoria di Google Calendar",
+  "action": { "default_popup": "popup.html" },
+  "options_page": "options.html",
+  "background": { "service_worker": "background.js", "type": "module" },
+  "permissions": ["storage", "alarms"]
+}
