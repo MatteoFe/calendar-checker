@@ -1,6 +1,7 @@
 // Thin wrapper over chrome.windows for the reminder popup window.
 const WIDTH = 440;
-const HEIGHT = 640;
+// Initial height only: the page resizes the window to fit its content
+const HEIGHT = 320;
 
 // Focuses the window with the given id if it still exists as a popup, otherwise opens a new one
 export async function focusOrCreatePopup(path: string, knownId: number | undefined): Promise<number | undefined> {

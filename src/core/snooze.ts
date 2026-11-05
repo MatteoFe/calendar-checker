@@ -12,12 +12,12 @@ interface SnoozeDefinition {
 }
 
 const DEFINITIONS: readonly SnoozeDefinition[] = [
-  { id: 'm5', label: '5 minuti', base: 'now', offsetMinutes: 5 },
-  { id: 'm10', label: '10 minuti', base: 'now', offsetMinutes: 10 },
-  { id: 'm15', label: '15 minuti', base: 'now', offsetMinutes: 15 },
-  { id: 'm30', label: '30 minuti', base: 'now', offsetMinutes: 30 },
-  { id: 'h1', label: '1 ora', base: 'now', offsetMinutes: 60 },
-  { id: 'h4', label: '4 ore', base: 'now', offsetMinutes: 240 },
+  { id: 'm5', label: '5 min', base: 'now', offsetMinutes: 5 },
+  { id: 'm10', label: '10 min', base: 'now', offsetMinutes: 10 },
+  { id: 'm15', label: '15 min', base: 'now', offsetMinutes: 15 },
+  { id: 'm30', label: '30 min', base: 'now', offsetMinutes: 30 },
+  { id: 'h1', label: '1 h', base: 'now', offsetMinutes: 60 },
+  { id: 'h4', label: '4 h', base: 'now', offsetMinutes: 240 },
   { id: 'before10', label: '10 min prima', base: 'start', offsetMinutes: -10 },
   { id: 'before5', label: '5 min prima', base: 'start', offsetMinutes: -5 },
   { id: 'atStart', label: "All'inizio", base: 'start', offsetMinutes: 0 },
