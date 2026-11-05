@@ -103,7 +103,10 @@ Note di implementazione:
 - Errori di sync: su 401 si rimuove il token (`removeCachedAuthToken`) e si riprova una volta; su errori di rete o 5xx la cache resta valida e si riprova al sync successivo.
 - Chiave dello stato promemoria: `eventId + start + minuti`, così le occorrenze ricorrenti restano distinte.
 - Il service worker MV3 viene terminato quando è inattivo: nessuno stato in memoria, solo storage e alarms.
-- Eventi all-day: campo `date` invece di `dateTime`; fusi orari gestiti con una libreria dedicata (es. date-fns-tz).
+- Eventi all-day: campo `date` invece di `dateTime` (fine esclusiva); fusi orari gestiti con `Intl` e funzioni pure, senza librerie.
+- Promemoria: si considerano solo quelli con metodo `popup`; quelli `email` vengono ignorati.
+- Calendari sincronizzati: fino alla pagina opzioni (slice 7) quelli con `selected: true` su Google Calendar.
+- Sync tollerante ai fallimenti per calendario: se un calendario dà errore ne restano gli eventi in cache, gli altri vengono sostituiti per intero. Se fallisce la lista dei calendari la cache non viene toccata.
 
 ## Struttura del codice
 
