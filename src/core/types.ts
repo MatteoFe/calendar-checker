@@ -60,3 +60,25 @@ export interface CalendarSyncResult {
   calendar: CachedCalendar;
   events: CalendarEvent[] | null;
 }
+
+// Reminder state, written only by the service worker.
+export type ReminderStatus = 'pending' | 'fired' | 'snoozed' | 'dismissed';
+
+export interface ReminderEntry {
+  key: string;
+  calendarId: string;
+  eventId: string;
+  // Epoch ms of the next time this reminder must fire (pending and snoozed only)
+  fireAt: number;
+  status: ReminderStatus;
+}
+
+export type ReminderState = Record<string, ReminderEntry>;
+
+export type SnoozeOptionId = 'm5' | 'm10' | 'm15' | 'm30' | 'h1' | 'h4' | 'before10' | 'before5' | 'atStart';
+
+// Commands sent by the UI to the service worker
+export type ReminderCommand =
+  | { type: 'snooze'; keys: string[]; option: SnoozeOptionId }
+  | { type: 'dismiss'; keys: string[] }
+  | { type: 'dismissAll' };

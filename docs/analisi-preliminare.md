@@ -101,7 +101,9 @@ Note di implementazione:
 - Avvio di Chrome (`onStartup`, `onInstalled`): non ci si affida agli alarm, che possono andare persi. Si legge lo stato salvato, si fanno scattare tutti i promemoria `pending` con orario passato e relativo evento non ancora finito, in un'unica finestra, poi si riprogramma l'alarm.
 - Stato dei promemoria: solo il service worker lo scrive. Popup e finestra promemoria leggono dallo storage (`storage.onChanged`) e inviano comandi con `runtime.sendMessage` (`snooze`, `dismiss`, `dismissAll`). Così non ci sono scritture in conflitto tra sync, snooze e ignora.
 - Errori di sync: su 401 si rimuove il token (`removeCachedAuthToken`) e si riprova una volta; su errori di rete o 5xx la cache resta valida e si riprova al sync successivo.
-- Chiave dello stato promemoria: `eventId + start + minuti`, così le occorrenze ricorrenti restano distinte.
+- Chiave dello stato promemoria: `calendarId + eventId + start + minuti`, così le occorrenze ricorrenti restano distinte e lo stesso evento condiviso in due calendari non collide.
+- Un promemoria scoperto per un evento già finito nasce `dismissed` e non scatta mai. Gli eventi in corso con promemoria già passato scattano al primo ricalcolo.
+- Una card per evento: se più promemoria dello stesso evento sono scattati, snooze e ignora valgono per tutti.
 - Il service worker MV3 viene terminato quando è inattivo: nessuno stato in memoria, solo storage e alarms.
 - Eventi all-day: campo `date` invece di `dateTime` (fine esclusiva); fusi orari gestiti con `Intl` e funzioni pure, senza librerie.
 - Promemoria: si considerano solo quelli con metodo `popup`; quelli `email` vengono ignorati.
