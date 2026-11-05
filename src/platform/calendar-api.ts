@@ -20,13 +20,13 @@ async function apiGet<T>(path: string, params: URLSearchParams, interactive: boo
   throw new Error('Unauthorized after retry');
 }
 
-// Calendars checked in the Google Calendar UI (selected: true)
-export async function listSelectedCalendars(interactive = false): Promise<RawCalendarListEntry[]> {
+// All calendars of the user; the caller decides which ones to sync
+export async function listCalendars(interactive = false): Promise<RawCalendarListEntry[]> {
   const params = new URLSearchParams({
     fields: 'items(id,summary,backgroundColor,selected,defaultReminders)',
   });
   const data = await apiGet<{ items?: RawCalendarListEntry[] }>('/users/me/calendarList', params, interactive);
-  return (data.items ?? []).filter((c) => c.selected);
+  return data.items ?? [];
 }
 
 // All events in the window, recurrences expanded by the API, following pagination

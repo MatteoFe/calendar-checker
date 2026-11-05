@@ -91,3 +91,9 @@ export interface CommandResponse {
   ok: boolean;
   events?: CalendarEvent[];
 }
+
+// User settings, stored in chrome.storage.sync
+export interface Settings {
+  // null until the user changes the selection: then Google's own "selected" flags apply
+  selectedCalendarIds: string[] | null;
+}

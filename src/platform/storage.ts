@@ -1,5 +1,6 @@
 // Thin wrapper over chrome.storage.local for the sync cache.
-import type { ReminderState, SyncCache } from '../core/types';
+import { DEFAULT_SETTINGS } from '../core/settings';
+import type { ReminderState, Settings, SyncCache } from '../core/types';
 
 const CACHE_KEY = 'syncCache';
 
@@ -43,4 +44,15 @@ export function onStorageChanged(listener: () => void): void {
   chrome.storage.onChanged.addListener((_changes, area) => {
     if (area === 'local') listener();
   });
+}
+
+const SETTINGS_KEY = 'settings';
+
+export async function readSettings(): Promise<Settings> {
+  const stored = await chrome.storage.sync.get(SETTINGS_KEY);
+  return { ...DEFAULT_SETTINGS, ...(stored[SETTINGS_KEY] as Partial<Settings> | undefined) };
+}
+
+export async function writeSettings(settings: Settings): Promise<void> {
+  await chrome.storage.sync.set({ [SETTINGS_KEY]: settings });
 }

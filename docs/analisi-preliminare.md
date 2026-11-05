@@ -107,7 +107,8 @@ Note di implementazione:
 - Il service worker MV3 viene terminato quando è inattivo: nessuno stato in memoria, solo storage e alarms.
 - Eventi all-day: campo `date` invece di `dateTime` (fine esclusiva); fusi orari gestiti con `Intl` e funzioni pure, senza librerie.
 - Promemoria: si considerano solo quelli con metodo `popup`; quelli `email` vengono ignorati.
-- Calendari sincronizzati: fino alla pagina opzioni (slice 7) quelli con `selected: true` su Google Calendar.
+- Calendari sincronizzati: la selezione salvata nelle opzioni (`chrome.storage.sync`); finché non la si modifica valgono quelli con `selected: true` su Google Calendar.
+- Autorizzazione: solo dalla pagina opzioni (pulsante, consenso interattivo); il service worker non chiede mai il consenso. All'installazione si apre la pagina opzioni.
 - Sync tollerante ai fallimenti per calendario: se un calendario dà errore ne restano gli eventi in cache, gli altri vengono sostituiti per intero. Se fallisce la lista dei calendari la cache non viene toccata.
 
 ## Struttura del codice
@@ -137,7 +138,7 @@ Per slice verticali, partendo da ciò che può bloccare il progetto:
 5. **Promemoria e snooze**: alarm unico, finestra, suono, ripresa all'avvio.
 6. **Popup vista mese**.
 7. **Pagina opzioni** (selezione dei calendari; fino ad allora, i calendari con `selected: true` su Google Calendar).
-8. **Icona**: icona dell'estensione in PNG (16, 32, 48, 128) da dichiarare nel manifest; al momento Chrome mostra quella generica.
+8. **Icona**: PNG 16, 32, 48, 128 in `public/icons/`, dichiarate nel manifest.
 
 Ogni slice si chiude con un commit.
 

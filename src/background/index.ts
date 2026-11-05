@@ -16,8 +16,8 @@ async function ensureAlarm(name: string, periodInMinutes: number): Promise<void>
   }
 }
 
-async function syncAndRefresh(interactive = false): Promise<void> {
-  await runSync(interactive);
+async function syncAndRefresh(): Promise<void> {
+  await runSync();
   await updateBadge();
   await refreshReminders();
 }
@@ -32,7 +32,11 @@ async function bootstrap(): Promise<void> {
   await syncAndRefresh();
 }
 
-chrome.runtime.onInstalled.addListener(() => void bootstrap());
+chrome.runtime.onInstalled.addListener((details) => {
+  void bootstrap();
+  // First run: the user has to authorize access and pick calendars
+  if (details.reason === 'install') void chrome.runtime.openOptionsPage();
+});
 chrome.runtime.onStartup.addListener(() => void bootstrap());
 
 chrome.alarms.onAlarm.addListener((alarm) => {
@@ -70,13 +74,4 @@ chrome.runtime.onMessage.addListener((message: Command, sender, sendResponse) =>
     }
   })();
   return true;
-});
-
-// Temporary: run `await debugSync()` in the service worker console to grant consent and sync.
-// To be removed when the options page (slice 7) handles authorization.
-Object.assign(globalThis, {
-  async debugSync() {
-    await syncAndRefresh(true);
-    return chrome.storage.local.get(['syncCache', 'reminderState']);
-  },
 });

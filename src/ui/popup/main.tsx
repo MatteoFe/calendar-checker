@@ -3,6 +3,7 @@ import { readableTextColor } from '../../core/color';
 import { chipLabel } from '../../core/format';
 import { type GridDay, dayKey, shiftMonth } from '../../core/month-view';
 import type { CalendarEvent } from '../../core/types';
+import { openOptionsPage } from '../../platform/runtime';
 import '../style.css';
 import {
   byDay,
@@ -133,7 +134,9 @@ const App = () => {
         <span class="ml-auto text-xs opacity-70">{syncing.value ? 'Aggiornamento…' : loadingRemote.value ? 'Caricamento…' : ''}</span>
       </header>
       {neverSynced.value && (
-        <p class="px-3 pb-2 text-sm text-warning">Nessuna sincronizzazione ancora: autorizza l'accesso a Google Calendar.</p>
+        <button type="button" class="px-3 pb-2 text-left text-sm text-warning underline" onClick={() => void openOptionsPage()}>
+          Nessuna sincronizzazione ancora: autorizza l'accesso a Google Calendar dalle opzioni.
+        </button>
       )}
       {remoteFailed.value && <p class="px-3 pb-2 text-sm text-error">Impossibile caricare questo mese.</p>}
       <div class="grid grid-cols-7 px-3 text-center text-xs font-semibold opacity-70">
