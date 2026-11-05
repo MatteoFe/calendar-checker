@@ -153,7 +153,9 @@ Nessuna pubblicazione: l'estensione si carica da `chrome://extensions` con Modal
 
 Costi: zero.
 
-**Stato attuale (da risolvere appena possibile):** la consent screen è ancora in **Testing**, con la propria email come utente di prova, perché il pulsante "Pubblica app" risulta disabilitato. In Testing l'autorizzazione scade dopo 7 giorni (confermato dalla documentazione di Google anche per `calendar.readonly`) e va rinnovata.
+**Stato attuale (5 novembre 2026): risolto.** La consent screen è stata pubblicata **In production**, senza verifica (uso personale), dopo aver compilato il Branding con homepage e privacy policy su un sottodominio di `zoomi.it` e verificato il dominio in Search Console. Era la mancanza di quei dati a tenere disabilitato "Pubblica app". Da verificare nell'uso: se l'autorizzazione smette davvero di scadere dopo 7 giorni (la scadenza è documentata solo per lo stato Testing). Il consenso dato quando l'app era in Testing potrebbe scadere comunque: per sicurezza va rinnovato una volta, revocando l'accesso e autorizzando di nuovo dalle opzioni.
+
+Storico del problema, mantenuto per riferimento. In Testing l'autorizzazione scade dopo 7 giorni (confermato dalla documentazione di Google anche per `calendar.readonly`) e va rinnovata.
 
 Cosa dice la documentazione di Google:
 - `calendar.readonly` è uno scope sensitive. L'app non verificata mostra l'avviso "app non verificata" e ha un tetto di 100 utenti; per uso personale (meno di 100 persone note) la verifica non è necessaria e l'avviso si accetta una volta.
