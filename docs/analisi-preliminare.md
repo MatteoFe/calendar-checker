@@ -153,7 +153,15 @@ Nessuna pubblicazione: l'estensione si carica da `chrome://extensions` con Modal
 
 Costi: zero.
 
-**Stato attuale (da risolvere appena possibile):** la consent screen è ancora in **Testing**, con la propria email come utente di prova, perché il pulsante "Pubblica app" risulta disabilitato. Si sospetta che Google richieda nel Branding dominio, homepage, privacy policy e termini di servizio. In Testing il consenso scade ogni 7 giorni e va riautorizzato. Da fare: preparare pagine statiche (es. GitHub Pages, oppure un dominio proprio), compilare il Branding e passare a In production. Resta da verificare se Google accetta un dominio `github.io` senza verifica in Search Console.
+**Stato attuale (da risolvere appena possibile):** la consent screen è ancora in **Testing**, con la propria email come utente di prova, perché il pulsante "Pubblica app" risulta disabilitato. In Testing l'autorizzazione scade dopo 7 giorni (confermato dalla documentazione di Google anche per `calendar.readonly`) e va rinnovata.
+
+Cosa dice la documentazione di Google:
+- `calendar.readonly` è uno scope sensitive. L'app non verificata mostra l'avviso "app non verificata" e ha un tetto di 100 utenti; per uso personale (meno di 100 persone note) la verifica non è necessaria e l'avviso si accetta una volta.
+- Per le app esterne in produzione homepage e privacy policy sono richieste e devono stare su un dominio verificato di proprietà. Non è chiaro se manchino proprio questi campi a sbloccare "Pubblica app": è l'ipotesi di lavoro, da verificare.
+- Per `github.io` non si è trovata conferma ufficiale; fonti secondarie dicono che non è verificabile in Search Console: scartato.
+- La scadenza dei 7 giorni è documentata solo sotto Testing; per In production non è documentata né in un senso né nell'altro.
+
+Decisione: pagine statiche (italiano e inglese) in `site/`, pubblicate su un sottodominio di `zoomi.it` (hosting Keliweb), poi verifica del dominio in Search Console (record TXT), compilazione del Branding e Publish app. L'app non va sottoposta a verifica. Se "Pubblica app" resta disabilitato, si riparte da qui. Nel frattempo l'estensione segnala l'autorizzazione scaduta (da implementare).
 
 ID estensione stabile: `cbcogelbeighnelkmhamflecdgjnflic` (derivato dalla `key` nel manifest).
 

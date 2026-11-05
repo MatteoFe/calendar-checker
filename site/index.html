@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Calendar Checker</title>
+    <meta name="description" content="Estensione Chrome personale: eventi di Google Calendar in vista mese, prossimo evento sull'icona e promemoria con posticipo." />
+    <link rel="icon" href="icon.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="icon.png" alt="" />
+        <div>
+          <h1>Calendar Checker</h1>
+          <p class="muted">Estensione Chrome per Google Calendar</p>
+        </div>
+      </header>
+
+      <p>
+        Calendar Checker è un'estensione di Chrome che mostra gli eventi di Google Calendar e gestisce i promemoria. È un progetto
+        personale, pensato per l'uso quotidiano di una sola persona, e funziona interamente nel browser: non esiste alcun server.
+      </p>
+
+      <h2>Cosa fa</h2>
+      <ul>
+        <li>Mostra gli eventi dei calendari scelti in una <strong>vista mese</strong>, con i colori dei calendari.</li>
+        <li>Indica sull'icona, con un badge e un tooltip, il <strong>tempo al prossimo evento</strong>.</li>
+        <li>
+          Apre una finestra di <strong>promemoria</strong> usando quelli impostati su Google Calendar, con la possibilità di
+          posticiparli o ignorarli.
+        </li>
+      </ul>
+
+      <h2>Quali dati usa</h2>
+      <p>
+        Per funzionare legge, in <strong>sola lettura</strong>, l'elenco dei tuoi calendari e i loro eventi tramite l'accesso
+        <code>calendar.readonly</code> di Google. Non crea, modifica né elimina nulla. I dettagli sono nella
+        <a href="privacy.html">informativa sulla privacy</a>.
+      </p>
+
+      <h2>Disponibilità</h2>
+      <p>
+        L'estensione non è pubblicata sul Chrome Web Store e non è destinata alla distribuzione pubblica. Questa pagina esiste per
+        descrivere il progetto e il modo in cui tratta i dati.
+      </p>
+
+      <h2>Contatti</h2>
+      <p><span data-contact>privacy [chiocciola] calendar-checker [punto] zoomi [punto] it</span></p>
+
+      <nav>
+        <a href="privacy.html">Privacy</a>
+        <a href="en/">English</a>
+      </nav>
+    </main>
+    <script src="contact.js"></script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Calendar Checker</title>
+    <meta name="description" content="Personal Chrome extension: Google Calendar events in a month view, next event on the toolbar icon and reminders with snooze." />
+    <link rel="icon" href="../icon.png" />
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="../icon.png" alt="" />
+        <div>
+          <h1>Calendar Checker</h1>
+          <p class="muted">Chrome extension for Google Calendar</p>
+        </div>
+      </header>
+
+      <p>
+        Calendar Checker is a Chrome extension that shows your Google Calendar events and manages reminders. It is a personal
+        project built for the daily use of a single person, and it runs entirely in the browser: there is no server.
+      </p>
+
+      <h2>What it does</h2>
+      <ul>
+        <li>Shows the events of the calendars you choose in a <strong>month view</strong>, using each calendar's color.</li>
+        <li>Shows the <strong>time left to your next event</strong> on the toolbar icon, with a badge and a tooltip.</li>
+        <li>
+          Opens a <strong>reminder</strong> window using the reminders you already set in Google Calendar, letting you snooze or
+          dismiss them.
+        </li>
+      </ul>
+
+      <h2>What data it uses</h2>
+      <p>
+        To work, it reads your calendar list and their events in <strong>read-only</strong> mode through Google's
+        <code>calendar.readonly</code> access. It never creates, edits or deletes anything. Details are in the
+        <a href="privacy.html">privacy policy</a>.
+      </p>
+
+      <h2>Availability</h2>
+      <p>
+        The extension is not published on the Chrome Web Store and is not meant for public distribution. This page exists to
+        describe the project and how it handles data.
+      </p>
+
+      <h2>Contact</h2>
+      <p><span data-contact>privacy [at] calendar-checker [dot] zoomi [dot] it</span></p>
+
+      <nav>
+        <a href="privacy.html">Privacy</a>
+        <a href="../">Italiano</a>
+      </nav>
+    </main>
+    <script src="../contact.js"></script>
+  </body>
+</html>
