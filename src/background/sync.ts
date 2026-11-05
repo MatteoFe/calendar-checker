@@ -1,6 +1,6 @@
 import { mergeSync } from '../core/merge-sync';
 import { mapCalendar, mapEvent } from '../core/map-event';
-import { syncWindow } from '../core/sync-window';
+import { type SyncWindow, syncWindow } from '../core/sync-window';
 import type { CachedCalendar, CalendarEvent, CalendarSyncResult, RawCalendarListEntry } from '../core/types';
 import { listEvents, listSelectedCalendars } from '../platform/calendar-api';
 import { readCache, writeCache } from '../platform/storage';
@@ -37,4 +37,12 @@ export async function runSync(interactive = false): Promise<void> {
   );
 
   await writeCache(mergeSync(await readCache(), results, now));
+}
+
+// Events of the cached calendars in an arbitrary range; nothing is stored.
+// Used by the popup for months outside the sync window.
+export async function fetchEventsInRange(window: SyncWindow): Promise<CalendarEvent[]> {
+  const { calendars } = await readCache();
+  const results = await Promise.all(calendars.map((calendar) => fetchCalendarEvents(calendar, window, false)));
+  return results.flatMap((events) => events ?? []);
 }

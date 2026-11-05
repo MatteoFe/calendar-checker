@@ -1,8 +1,8 @@
 // Service worker entry point. No in-memory state: only storage and alarms.
-import type { ReminderCommand } from '../core/types';
+import type { CommandResponse, PopupCommand, ReminderCommand } from '../core/types';
 import { updateBadge } from './badge';
 import { REMINDER_ALARM, forgetReminderWindow, handleReminderCommand, refreshReminders } from './reminders';
-import { runSync } from './sync';
+import { fetchEventsInRange, runSync } from './sync';
 
 const SYNC_ALARM = 'sync';
 const SYNC_PERIOD_MINUTES = 5;
@@ -42,17 +42,31 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === REMINDER_ALARM) void refreshReminders();
 });
 
-// Commands from the reminder window; the channel stays open until the state is written
-chrome.runtime.onMessage.addListener((message: ReminderCommand, sender, sendResponse) => {
-  if (sender.id !== chrome.runtime.id) return false;
-  if (message.type !== 'snooze' && message.type !== 'dismiss' && message.type !== 'dismissAll') return false;
+type Command = ReminderCommand | PopupCommand;
+const COMMAND_TYPES = ['snooze', 'dismiss', 'dismissAll', 'syncNow', 'fetchRange'];
+
+async function handleCommand(command: Command): Promise<CommandResponse> {
+  switch (command.type) {
+    case 'syncNow':
+      await syncAndRefresh();
+      return { ok: true };
+    case 'fetchRange':
+      return { ok: true, events: await fetchEventsInRange(command) };
+    default:
+      await handleReminderCommand(command);
+      return { ok: true };
+  }
+}
+
+// Commands from the popup and the reminder window; the channel stays open until the work is done
+chrome.runtime.onMessage.addListener((message: Command, sender, sendResponse) => {
+  if (sender.id !== chrome.runtime.id || !COMMAND_TYPES.includes(message?.type)) return false;
   void (async () => {
     try {
-      await handleReminderCommand(message);
-      sendResponse({ ok: true });
+      sendResponse(await handleCommand(message));
     } catch (error) {
-      console.error('Reminder command failed', error);
-      sendResponse({ ok: false });
+      console.error('Command failed', message.type, error);
+      sendResponse({ ok: false } satisfies CommandResponse);
     }
   })();
   return true;

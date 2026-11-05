@@ -23,3 +23,10 @@ export const relativeStart = (event: CalendarEvent, now: number): string => {
   if (untilStart < DAY) return `tra ${Math.floor(untilStart / HOUR)} h`;
   return `tra ${Math.floor(untilStart / DAY)} g`;
 };
+
+// Label of a month-view chip: "10:00 Meeting" for timed events, just the title for all-day ones
+export const chipLabel = (event: CalendarEvent, timeZone?: string): string => {
+  if (event.allDay) return event.title;
+  const time = new Intl.DateTimeFormat('it-IT', { hour: '2-digit', minute: '2-digit', timeZone }).format(new Date(eventStartMs(event)));
+  return `${time} ${event.title}`;
+};

@@ -82,3 +82,12 @@ export type ReminderCommand =
   | { type: 'snooze'; keys: string[]; option: SnoozeOptionId }
   | { type: 'dismiss'; keys: string[] }
   | { type: 'dismissAll' };
+
+// Commands sent by the popup to the service worker
+export type PopupCommand = { type: 'syncNow' } | { type: 'fetchRange'; timeMin: string; timeMax: string };
+
+// Reply of the service worker to any command
+export interface CommandResponse {
+  ok: boolean;
+  events?: CalendarEvent[];
+}
