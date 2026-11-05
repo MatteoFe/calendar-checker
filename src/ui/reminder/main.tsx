@@ -47,11 +47,7 @@ const Reminder = ({ card }: { card: ReminderCard }) => {
   const isOpen = expanded.value === ref;
   const when = relativeStart(event, now.value);
   return (
-    <article
-      class="relative flex min-h-[76px] items-center"
-      onMouseLeave={() => isOpen && (expanded.value = null)}
-      onKeyDown={(event) => event.key === 'Escape' && (expanded.value = null)}
-    >
+    <article class="flex min-h-[76px] items-center" onKeyDown={(event) => event.key === 'Escape' && (expanded.value = null)}>
       <div class="flex w-full items-center gap-3">
         <span class="size-2.5 shrink-0 rounded-full" style={{ background: color }} title={calendarName} />
         <div class="min-w-0 flex-1">
@@ -64,18 +60,39 @@ const Reminder = ({ card }: { card: ReminderCard }) => {
             {formatEventTime(event)}
           </p>
         </div>
-        <button
-          type="button"
-          class={`btn btn-ghost btn-square btn-sm ${isOpen ? 'bg-base-200' : ''}`}
-          title="Posticipa"
-          aria-label="Posticipa"
-          aria-expanded={isOpen}
-          onMouseEnter={() => (expanded.value = ref)}
-          onFocus={() => (expanded.value = ref)}
-          onClick={() => (expanded.value = ref)}
-        >
-          <SnoozeIcon />
-        </button>
+        {/* Button and floating options share a wrapper: leaving both closes the popup */}
+        <div class="relative" onMouseLeave={() => isOpen && (expanded.value = null)}>
+          <button
+            type="button"
+            class={`btn btn-ghost btn-square btn-sm ${isOpen ? 'bg-base-200' : ''}`}
+            title="Posticipa"
+            aria-label="Posticipa"
+            aria-expanded={isOpen}
+            onMouseEnter={() => (expanded.value = ref)}
+            onFocus={() => (expanded.value = ref)}
+            onClick={() => (expanded.value = ref)}
+          >
+            <SnoozeIcon />
+          </button>
+          {isOpen && (
+            // Flush with the button (no gap) so the pointer can travel into the popup
+            <div class="absolute right-full top-1/2 z-20 -translate-y-1/2 pr-1">
+              <div class="flex w-max max-w-[290px] flex-wrap gap-1.5 rounded-box border border-base-300 bg-base-100 p-2.5 shadow-lg">
+                {availableSnoozeOptions(event, now.value).map((option) => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    title={option.hint}
+                    class="rounded-full border border-base-300 px-2.5 py-1 text-xs tabular-nums transition-colors hover:border-primary hover:text-primary"
+                    onClick={() => void sendReminderCommand({ type: 'snooze', keys, option: option.id })}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
         <button
           type="button"
           class="btn btn-ghost btn-square btn-sm"
@@ -86,28 +103,12 @@ const Reminder = ({ card }: { card: ReminderCard }) => {
           <CheckIcon />
         </button>
       </div>
-      {isOpen && (
-        // Covers title and time only: the snooze and dismiss buttons stay reachable
-        <div class="absolute inset-y-0 left-0 right-[84px] z-10 flex flex-wrap content-center items-center gap-1.5 bg-base-100">
-          {availableSnoozeOptions(event, now.value).map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              title={option.hint}
-              class="rounded-full border border-base-300 px-2.5 py-1 text-xs tabular-nums transition-colors hover:border-primary hover:text-primary"
-              onClick={() => void sendReminderCommand({ type: 'snooze', keys, option: option.id })}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
-      )}
     </article>
   );
 };
 
 const App = () => (
-  <main class="px-4">
+  <main class="px-4 py-2">
     {cards.value.length > 1 && (
       <header class="flex items-center justify-between border-b border-base-300 py-1.5 pl-1">
         <h1 class="text-xs font-medium uppercase tracking-wider text-secondary">{cards.value.length} promemoria</h1>
