@@ -2,7 +2,7 @@ import { effect, signal } from '@preact/signals';
 import { render } from 'preact';
 import { formatEventTime, relativeStart } from '../../core/format';
 import { eventRef } from '../../core/reminders';
-import { availableSnoozeOptions } from '../../core/snooze';
+import { type SnoozeOption, availableSnoozeOptions } from '../../core/snooze';
 import { sendReminderCommand } from '../../platform/messaging';
 import { closeCurrentWindow } from '../../platform/windows';
 import '../style.css';
@@ -10,6 +10,12 @@ import { playChime } from './chime';
 import { type ReminderCard, cards, loaded, now, startStore } from './reminder-store';
 
 const SCREEN_MARGIN_PX = 80;
+
+// Delays from now on top, "before the start" options below; empty groups are dropped
+const snoozeGroups = (event: ReminderCard['event']): SnoozeOption[][] => {
+  const options = availableSnoozeOptions(event, now.value);
+  return [options.filter((o) => !o.relativeToStart), options.filter((o) => o.relativeToStart)].filter((group) => group.length > 0);
+};
 
 // Reference of the card whose snooze options are shown (on hover or focus)
 const expanded = signal<string | null>(null);
@@ -77,17 +83,21 @@ const Reminder = ({ card }: { card: ReminderCard }) => {
           {isOpen && (
             // Flush with the button (no gap) so the pointer can travel into the popup
             <div class="absolute right-full top-1/2 z-20 -translate-y-1/2 pr-1">
-              <div class="flex w-max max-w-[290px] flex-wrap gap-1.5 rounded-box border border-base-300 bg-base-100 p-2.5 shadow-lg">
-                {availableSnoozeOptions(event, now.value).map((option) => (
-                  <button
-                    key={option.id}
-                    type="button"
-                    title={option.hint}
-                    class="rounded-full border border-base-300 px-2.5 py-1 text-xs tabular-nums transition-colors hover:border-primary hover:text-primary"
-                    onClick={() => void sendReminderCommand({ type: 'snooze', keys, option: option.id })}
-                  >
-                    {option.label}
-                  </button>
+              <div class="flex w-max max-w-[330px] flex-col gap-1.5 rounded-box border border-base-300 bg-base-100 p-2.5 shadow-lg">
+                {snoozeGroups(event).map((options, index) => (
+                  <div key={index} class="flex flex-wrap gap-1.5">
+                    {options.map((option) => (
+                      <button
+                        key={option.id}
+                        type="button"
+                        title={option.hint}
+                        class="rounded-full border border-base-300 px-2.5 py-1 text-xs tabular-nums transition-colors hover:border-primary hover:text-primary"
+                        onClick={() => void sendReminderCommand({ type: 'snooze', keys, option: option.id })}
+                      >
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
                 ))}
               </div>
             </div>

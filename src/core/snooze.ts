@@ -3,6 +3,14 @@ import type { CalendarEvent, SnoozeOptionId } from './types';
 
 const MINUTE = 60_000;
 
+export interface SnoozeOption {
+  id: SnoozeOptionId;
+  label: string;
+  hint: string;
+  // "Remind me X minutes before the start" options, as opposed to plain delays from now
+  relativeToStart: boolean;
+}
+
 interface SnoozeDefinition {
   id: SnoozeOptionId;
   label: string;
@@ -36,5 +44,5 @@ export const snoozeUntil = (id: SnoozeOptionId, event: CalendarEvent, now: numbe
 export const availableSnoozeOptions = (
   event: CalendarEvent,
   now: number,
-): { id: SnoozeOptionId; label: string; hint: string }[] =>
-  DEFINITIONS.filter((d) => d.base === 'now' || snoozeUntil(d.id, event, now) > now).map(({ id, label, hint }) => ({ id, label, hint }));
+): SnoozeOption[] =>
+  DEFINITIONS.filter((d) => d.base === 'now' || snoozeUntil(d.id, event, now) > now).map(({ id, label, hint, base }) => ({ id, label, hint, relativeToStart: base === 'start' }));
