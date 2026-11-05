@@ -3,8 +3,27 @@
   "name": "Calendar Checker",
   "version": "0.0.1",
   "description": "Eventi e promemoria di Google Calendar",
-  "action": { "default_popup": "popup.html" },
+  "action": {
+    "default_popup": "popup.html"
+  },
   "options_page": "options.html",
-  "background": { "service_worker": "background.js", "type": "module" },
-  "permissions": ["storage", "alarms"]
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "alarms",
+    "identity"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr76wtL/1ZlezTVu3UjKHvjxzaxRGOUh2cqvSW8WE+4EPcDl7YycmKZOYavy4GZLVZ38wc3Vp0LTRjw9LTeMWTjL5ZfjcINZ+T6LknJT2I6YREsTMLJj458WnTFbqktHBHVWUFMKddME17GdnFGW4pnBxi+MCLyUW5VYk4SzZM8KcBsgyOR/F8MgoMznRkAOTWHBMi4tfagatXDtSj2Gq/Eqt4VDB2W8OHSh0G8XL971il6pixw9iRhWnsXHdLJv+zlEj7Qp4doOrWzoB+Dq5H8rGEnQGTNPzc4OMLEkAIW0+rewVGUu6g1mRqb/InEYmjcr3psMxr8aMSR5uDns/zwIDAQAB",
+  "host_permissions": [
+    "https://www.googleapis.com/*"
+  ],
+  "oauth2": {
+    "client_id": "62860456817-n1sbu5hbq3vmi1nu922t5r0nhrq2tlnn.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar.readonly"
+    ]
+  }
 }

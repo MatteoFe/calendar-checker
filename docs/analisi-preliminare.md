@@ -146,6 +146,10 @@ Nessuna pubblicazione: l'estensione si carica da `chrome://extensions` con Modal
 
 Costi: zero.
 
+**Stato attuale (da risolvere appena possibile):** la consent screen è ancora in **Testing**, con la propria email come utente di prova, perché il pulsante "Pubblica app" risulta disabilitato. Si sospetta che Google richieda nel Branding dominio, homepage, privacy policy e termini di servizio. In Testing il consenso scade ogni 7 giorni e va riautorizzato. Da fare: preparare pagine statiche (es. GitHub Pages, oppure un dominio proprio), compilare il Branding e passare a In production. Resta da verificare se Google accetta un dominio `github.io` senza verifica in Search Console.
+
+ID estensione stabile: `cbcogelbeighnelkmhamflecdgjnflic` (derivato dalla `key` nel manifest).
+
 ## Fuori perimetro ed evoluzioni future
 
 Esclusi dall'MVP: multi-account, creazione e modifica eventi, viste diverse dal mese, "non disturbare", scelta del suono, lingue diverse dall'italiano, notifiche push via `watch`.
