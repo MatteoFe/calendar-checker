@@ -134,7 +134,8 @@ Per slice verticali, partendo da ciò che può bloccare il progetto:
 4. **Badge e tooltip**: alarm di sync e alarm ogni minuto.
 5. **Promemoria e snooze**: alarm unico, finestra, suono, ripresa all'avvio.
 6. **Popup vista mese**.
-7. **Pagina opzioni** (selezione dei calendari; fino ad allora, lista fissa).
+7. **Pagina opzioni** (selezione dei calendari; fino ad allora, i calendari con `selected: true` su Google Calendar).
+8. **Icona**: icona dell'estensione in PNG (16, 32, 48, 128) da dichiarare nel manifest; al momento Chrome mostra quella generica.
 
 Ogni slice si chiude con un commit.
 
