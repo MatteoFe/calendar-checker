@@ -47,12 +47,15 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 });
 
 type Command = ReminderCommand | PopupCommand;
-const COMMAND_TYPES = ['snooze', 'dismiss', 'dismissAll', 'syncNow', 'fetchRange'];
+const COMMAND_TYPES = ['snooze', 'dismiss', 'dismissAll', 'syncNow', 'showReminders', 'fetchRange'];
 
 async function handleCommand(command: Command): Promise<CommandResponse> {
   switch (command.type) {
     case 'syncNow':
       await syncAndRefresh();
+      return { ok: true };
+    case 'showReminders':
+      await refreshReminders(true);
       return { ok: true };
     case 'fetchRange':
       return { ok: true, events: await fetchEventsInRange(command) };

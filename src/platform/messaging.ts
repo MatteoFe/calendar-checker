@@ -11,6 +11,11 @@ export async function requestSync(): Promise<void> {
   await chrome.runtime.sendMessage({ type: 'syncNow' } satisfies PopupCommand);
 }
 
+// Reopens the reminder window for reminders still waiting for an answer
+export async function requestShowReminders(): Promise<void> {
+  await chrome.runtime.sendMessage({ type: 'showReminders' } satisfies PopupCommand);
+}
+
 // Events of a range outside the cached window, fetched by the service worker
 export async function requestRange(window: SyncWindow): Promise<CalendarEvent[]> {
   const command: PopupCommand = { type: 'fetchRange', timeMin: window.timeMin, timeMax: window.timeMax };

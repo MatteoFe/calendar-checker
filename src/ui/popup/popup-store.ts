@@ -1,9 +1,10 @@
 import { computed, effect, signal } from '@preact/signals';
 import { eventsByDay, isMonthCovered, monthBounds, monthGrid } from '../../core/month-view';
+import { firedEntries } from '../../core/reminders';
 import { syncWindow } from '../../core/sync-window';
-import type { CalendarEvent, SyncCache } from '../../core/types';
+import type { CalendarEvent, ReminderState, SyncCache } from '../../core/types';
 import { requestRange, requestSync } from '../../platform/messaging';
-import { onStorageChanged, readCache } from '../../platform/storage';
+import { onStorageChanged, readCache, readReminderState } from '../../platform/storage';
 
 const DEFAULT_COLOR = '#4285f4';
 
@@ -17,6 +18,13 @@ export const remoteFailed = signal(false);
 const cache = signal<SyncCache>({ calendars: [], events: [], lastSync: null });
 // Events of months outside the sync window, kept only while the popup is open
 const remote = signal<Record<string, CalendarEvent[]>>({});
+const reminders = signal<ReminderState>({});
+
+// Events with reminders that fired and still wait for an answer (e.g. the window was closed).
+// The key minus its trailing minutes identifies the event, like the cards of the reminder window.
+export const pendingReminders = computed(
+  () => new Set(firedEntries(reminders.value).map((entry) => entry.key.slice(0, entry.key.lastIndexOf('|')))).size,
+);
 
 const monthId = (year: number, month: number): string => `${year}-${month}`;
 
@@ -39,7 +47,9 @@ export const calendarColors = computed(
 export const colorOf = (calendarId: string): string => calendarColors.value.get(calendarId) ?? DEFAULT_COLOR;
 
 async function load(): Promise<void> {
-  cache.value = await readCache();
+  const [freshCache, freshReminders] = await Promise.all([readCache(), readReminderState()]);
+  cache.value = freshCache;
+  reminders.value = freshReminders;
   loaded.value = true;
 }
 

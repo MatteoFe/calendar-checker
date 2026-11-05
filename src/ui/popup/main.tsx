@@ -3,6 +3,7 @@ import { readableTextColor } from '../../core/color';
 import { chipLabel } from '../../core/format';
 import { type GridDay, dayKey, shiftMonth } from '../../core/month-view';
 import type { CalendarEvent } from '../../core/types';
+import { requestShowReminders } from '../../platform/messaging';
 import { openOptionsPage } from '../../platform/runtime';
 import '../style.css';
 import {
@@ -11,6 +12,7 @@ import {
   grid,
   loadingRemote,
   neverSynced,
+  pendingReminders,
   remoteFailed,
   selectedDay,
   startStore,
@@ -133,6 +135,19 @@ const App = () => {
         </button>
         <span class="ml-auto text-xs opacity-70">{syncing.value ? 'Aggiornamento…' : loadingRemote.value ? 'Caricamento…' : ''}</span>
       </header>
+      {pendingReminders.value > 0 && (
+        <button
+          type="button"
+          class="mx-3 mb-3 flex items-center gap-2 border-y border-base-300 bg-base-200 px-3 py-2 text-left text-sm"
+          onClick={() => void requestShowReminders()}
+        >
+          <span class="size-2 rounded-full bg-warning" />
+          <span class="flex-1">
+            {pendingReminders.value === 1 ? '1 promemoria in sospeso' : `${pendingReminders.value} promemoria in sospeso`}
+          </span>
+          <span class="font-medium text-primary">Mostra</span>
+        </button>
+      )}
       {neverSynced.value && (
         <button type="button" class="px-3 pb-2 text-left text-sm text-warning underline" onClick={() => void openOptionsPage()}>
           Nessuna sincronizzazione ancora: autorizza l'accesso a Google Calendar dalle opzioni.
