@@ -28,6 +28,8 @@ const DEFINITIONS: readonly SnoozeDefinition[] = [
   { id: 'm30', label: '30m', hint: 'Posticipa di 30 minuti', base: 'now', offsetMinutes: 30 },
   { id: 'h1', label: '1h', hint: 'Posticipa di 1 ora', base: 'now', offsetMinutes: 60 },
   { id: 'h4', label: '4h', hint: 'Posticipa di 4 ore', base: 'now', offsetMinutes: 240 },
+  { id: 'before4h', label: '−4h', hint: "4 ore prima dell'inizio", base: 'start', offsetMinutes: -240 },
+  { id: 'before1h', label: '−1h', hint: "1 ora prima dell'inizio", base: 'start', offsetMinutes: -60 },
   { id: 'before10', label: '−10m', hint: "10 minuti prima dell'inizio", base: 'start', offsetMinutes: -10 },
   { id: 'before5', label: '−5m', hint: "5 minuti prima dell'inizio", base: 'start', offsetMinutes: -5 },
   { id: 'atStart', label: 'Inizio', hint: "All'inizio dell'evento", base: 'start', offsetMinutes: 0 },

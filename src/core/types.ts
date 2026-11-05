@@ -75,7 +75,7 @@ export interface ReminderEntry {
 
 export type ReminderState = Record<string, ReminderEntry>;
 
-export type SnoozeOptionId = 'm5' | 'm10' | 'm15' | 'm30' | 'h1' | 'h4' | 'before10' | 'before5' | 'atStart';
+export type SnoozeOptionId = 'm5' | 'm10' | 'm15' | 'm30' | 'h1' | 'h4' | 'before4h' | 'before1h' | 'before10' | 'before5' | 'atStart';
 
 // Commands sent by the UI to the service worker
 export type ReminderCommand =

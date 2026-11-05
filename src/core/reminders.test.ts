@@ -131,6 +131,8 @@ describe('snooze options', () => {
     const ids = (offset: number) => availableSnoozeOptions(ev({ id: 'x', start: iso(offset), end: iso(HOUR) }), now).map((o) => o.id);
     expect(ids(7 * MIN)).toEqual(['m5', 'm10', 'm15', 'm30', 'h1', 'h4', 'before5', 'atStart']);
     expect(ids(20 * MIN)).toContain('before10');
+    expect(ids(20 * MIN)).not.toContain('before1h');
+    expect(ids(5 * HOUR)).toEqual(['m5', 'm10', 'm15', 'm30', 'h1', 'h4', 'before4h', 'before1h', 'before10', 'before5', 'atStart']);
     expect(ids(-MIN)).not.toContain('atStart');
   });
 });
