@@ -8,50 +8,63 @@ import '../style.css';
 import { playChime } from './chime';
 import { type ReminderCard, cards, loaded, now, startStore } from './reminder-store';
 
-const Card = ({ card }: { card: ReminderCard }) => {
-  const { event, keys, color } = card;
+const Reminder = ({ card }: { card: ReminderCard }) => {
+  const { event, keys, color, calendarName } = card;
+  const when = relativeStart(event, now.value);
   return (
-    <article class="card card-border bg-base-200 shadow-sm" style={{ borderLeft: `4px solid ${color}` }}>
-      <div class="card-body gap-2 p-4">
-        <h2 class="card-title text-base">{event.title}</h2>
-        <p class="text-sm">{formatEventTime(event)}</p>
-        <p class="text-sm font-semibold">{relativeStart(event, now.value)}</p>
-        <div class="flex flex-wrap items-center gap-1">
-          <span class="text-xs opacity-70">Posticipa:</span>
+    <article class="flex flex-col gap-4 py-5">
+      <div class="flex flex-col gap-1">
+        <p class="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-secondary">
+          <span class="size-2 rounded-full" style={{ background: color }} />
+          <span class="truncate">{calendarName || 'Calendario'}</span>
+        </p>
+        <p class={`text-3xl font-semibold tabular-nums tracking-tight ${when === 'in corso' ? 'text-success' : 'text-primary'}`}>
+          {when}
+        </p>
+      </div>
+      <div class="flex flex-col gap-0.5">
+        <h2 class="text-lg font-medium leading-snug">{event.title}</h2>
+        <p class="text-sm tabular-nums text-secondary">{formatEventTime(event)}</p>
+      </div>
+      <div class="flex flex-col gap-2">
+        <p class="text-xs font-medium uppercase tracking-wider text-secondary">Posticipa</p>
+        <div class="flex flex-wrap gap-1.5">
           {availableSnoozeOptions(event, now.value).map((option) => (
             <button
               key={option.id}
               type="button"
-              class="btn btn-xs"
+              class="rounded-full border border-base-300 px-3 py-1 text-xs tabular-nums transition-colors hover:border-primary hover:text-primary"
               onClick={() => void sendReminderCommand({ type: 'snooze', keys, option: option.id })}
             >
               {option.label}
             </button>
           ))}
         </div>
-        <div class="card-actions justify-end">
-          <button type="button" class="btn btn-sm btn-primary" onClick={() => void sendReminderCommand({ type: 'dismiss', keys })}>
-            Ignora
-          </button>
-        </div>
+      </div>
+      <div class="flex justify-end">
+        <button type="button" class="btn btn-sm btn-neutral" onClick={() => void sendReminderCommand({ type: 'dismiss', keys })}>
+          Ignora
+        </button>
       </div>
     </article>
   );
 };
 
 const App = () => (
-  <main class="flex flex-col gap-3 p-3">
-    <header class="flex items-center justify-between">
-      <h1 class="text-lg font-bold">Promemoria</h1>
-      {cards.value.length > 1 && (
-        <button type="button" class="btn btn-sm btn-outline" onClick={() => void sendReminderCommand({ type: 'dismissAll' })}>
+  <main class="min-h-screen px-6 py-2">
+    {cards.value.length > 1 && (
+      <header class="flex items-center justify-between border-b border-base-300 py-3">
+        <h1 class="text-sm font-semibold">{cards.value.length} promemoria</h1>
+        <button type="button" class="btn btn-sm btn-ghost" onClick={() => void sendReminderCommand({ type: 'dismissAll' })}>
           Ignora tutti
         </button>
-      )}
-    </header>
-    {cards.value.map((card) => (
-      <Card key={card.keys.join()} card={card} />
-    ))}
+      </header>
+    )}
+    <div class="divide-y divide-base-300">
+      {cards.value.map((card) => (
+        <Reminder key={card.keys.join()} card={card} />
+      ))}
+    </div>
   </main>
 );
 

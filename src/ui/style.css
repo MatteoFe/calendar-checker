@@ -1,2 +1,86 @@
 @import 'tailwindcss';
-@plugin 'daisyui';
+@plugin 'daisyui' {
+  themes: false;
+}
+
+/* Sober palette: warm neutrals, a single ink-blue accent taken from the icon */
+@plugin 'daisyui/theme' {
+  name: 'calendar-light';
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+  --color-base-100: #fbfaf8;
+  --color-base-200: #f2f0ec;
+  --color-base-300: #e2dfd9;
+  --color-base-content: #1d1c1a;
+  --color-primary: #2a52d4;
+  --color-primary-content: #ffffff;
+  --color-secondary: #5b5a56;
+  --color-secondary-content: #ffffff;
+  --color-accent: #2a52d4;
+  --color-accent-content: #ffffff;
+  --color-neutral: #1d1c1a;
+  --color-neutral-content: #fbfaf8;
+  --color-info: #2a52d4;
+  --color-info-content: #ffffff;
+  --color-success: #1b7f4b;
+  --color-success-content: #ffffff;
+  --color-warning: #a35f00;
+  --color-warning-content: #ffffff;
+  --color-error: #b3261e;
+  --color-error-content: #ffffff;
+  --radius-selector: 999px;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@plugin 'daisyui/theme' {
+  name: 'calendar-dark';
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+  --color-base-100: #161715;
+  --color-base-200: #1f201d;
+  --color-base-300: #2d2e2a;
+  --color-base-content: #ecebe6;
+  --color-primary: #8fa8ff;
+  --color-primary-content: #0e1530;
+  --color-secondary: #a4a29b;
+  --color-secondary-content: #161715;
+  --color-accent: #8fa8ff;
+  --color-accent-content: #0e1530;
+  --color-neutral: #ecebe6;
+  --color-neutral-content: #161715;
+  --color-info: #8fa8ff;
+  --color-info-content: #0e1530;
+  --color-success: #5fd394;
+  --color-success-content: #08200f;
+  --color-warning: #f0b45a;
+  --color-warning-content: #271700;
+  --color-error: #ff8a80;
+  --color-error-content: #2b0805;
+  --radius-selector: 999px;
+  --radius-field: 0.5rem;
+  --radius-box: 0.75rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@layer base {
+  html {
+    font-family: 'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2 {
+    letter-spacing: -0.015em;
+  }
+}

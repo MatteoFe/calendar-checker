@@ -10,6 +10,7 @@ export interface ReminderCard {
   event: CalendarEvent;
   keys: string[];
   color: string;
+  calendarName: string;
 }
 
 export const loaded = signal(false);
@@ -28,8 +29,8 @@ export const cards = computed<ReminderCard[]>(() => {
     if (existing) {
       existing.keys.push(entry.key);
     } else {
-      const color = cache.value.calendars.find((c) => c.id === event.calendarId)?.color ?? DEFAULT_COLOR;
-      groups.set(ref, { event, keys: [entry.key], color });
+      const calendar = cache.value.calendars.find((c) => c.id === event.calendarId);
+      groups.set(ref, { event, keys: [entry.key], color: calendar?.color ?? DEFAULT_COLOR, calendarName: calendar?.summary ?? '' });
     }
   }
   return [...groups.values()].sort((a, b) => eventStartMs(a.event) - eventStartMs(b.event));
