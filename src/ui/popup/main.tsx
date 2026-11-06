@@ -2,6 +2,7 @@ import { render } from 'preact';
 import { readableTextColor } from '../../core/color';
 import { chipLabel } from '../../core/format';
 import { type GridDay, dayKey, shiftMonth } from '../../core/month-view';
+import { eventEndMs } from '../../core/reminders';
 import type { CalendarEvent } from '../../core/types';
 import { requestShowReminders } from '../../platform/messaging';
 import { openOptionsPage } from '../../platform/runtime';
@@ -48,8 +49,11 @@ const goToToday = (): void => {
 
 const isDeclined = (event: CalendarEvent): boolean => event.responseStatus === 'declined';
 
+const isPast = (event: CalendarEvent): boolean => eventEndMs(event) <= Date.now();
+
 const Chip = ({ event }: { event: CalendarEvent }) => {
   const color = colorOf(event.calendarId);
+  const faded = isDeclined(event) || isPast(event);
   return (
     <a
       href={event.htmlLink || undefined}
@@ -60,7 +64,8 @@ const Chip = ({ event }: { event: CalendarEvent }) => {
       style={{
         background: color,
         color: readableTextColor(color),
-        opacity: isDeclined(event) ? 0.5 : 1,
+        opacity: faded ? 0.5 : 1,
+        filter: isPast(event) ? 'grayscale(0.6)' : undefined,
         textDecoration: isDeclined(event) ? 'line-through' : undefined,
       }}
     >
