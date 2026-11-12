@@ -1,11 +1,12 @@
 import { render } from 'preact';
 import { readableTextColor } from '../../core/color';
+import { newEventUrl } from '../../core/calendar-url';
 import { chipLabel } from '../../core/format';
 import { type GridDay, dayKey, shiftMonth } from '../../core/month-view';
 import { eventEndMs } from '../../core/reminders';
 import type { CalendarEvent } from '../../core/types';
 import { requestShowReminders } from '../../platform/messaging';
-import { openOptionsPage } from '../../platform/runtime';
+import { openOptionsPage, openUrl } from '../../platform/runtime';
 import '../style.css';
 import {
   byDay,
@@ -82,6 +83,11 @@ const DayCell = ({ day, todayKey }: { day: GridDay; todayKey: string }) => {
   return (
     <div
       class={`flex min-h-[78px] flex-col gap-0.5 border border-base-300 p-0.5 ${day.inMonth ? '' : 'opacity-40'} ${isSelected ? 'bg-base-200' : ''}`}
+      onDblClick={(e) => {
+        // Double-clicking an event chip must not also create a new event.
+        if ((e.target as HTMLElement).closest('a')) return;
+        void openUrl(newEventUrl(day.key));
+      }}
     >
       <button
         type="button"
