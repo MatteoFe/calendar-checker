@@ -8,7 +8,7 @@ Estensione Chrome (Manifest V3) per uso personale che mostra a colpo d'occhio gl
 
 Stack: TypeScript, popup e finestra promemoria in Preact (signals), Vite, Tailwind CSS + DaisyUI, Vitest, approccio funzionale.
 
-Angular e React sono stati valutati con tre scaffolder di confronto (`experiments/`). Preact vince sul peso del bundle del popup (8,8 kB gzip contro 29,7 kB di Angular e 68,9 kB di React), su una sola pipeline di build e sulle pagine come entry separate.
+Angular e React sono stati valutati con tre scaffolder di confronto. Preact vince sul peso del bundle del popup (8,8 kB gzip contro 29,7 kB di Angular e 68,9 kB di React), su una sola pipeline di build e sulle pagine come entry separate.
 
 ## Vincoli
 

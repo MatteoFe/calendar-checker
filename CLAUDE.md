@@ -6,7 +6,6 @@ Estensione Chrome (Manifest V3) per uso personale: mostra gli eventi di Google C
 
 - TypeScript, Preact + `@preact/signals`, Vite (multi-page), Tailwind CSS + DaisyUI, Vitest.
 - Nessun backend. Nessuna libreria di date (`Intl` e funzioni pure).
-- Gli scaffolder in `experiments/` servono solo come confronto tra framework: non sono il progetto.
 
 ## Struttura
 
