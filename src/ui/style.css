@@ -84,3 +84,8 @@
     letter-spacing: -0.015em;
   }
 }
+
+/* Chrome popups show a scrollbar even when the content fits; scrolling still works if it does not */
+.no-scrollbar {
+  scrollbar-width: none;
+}
