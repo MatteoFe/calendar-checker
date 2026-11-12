@@ -89,4 +89,11 @@ describe('mapEvent', () => {
     );
     expect(event?.responseStatus).toBe('declined');
   });
+
+  it('uses the event color when set, none otherwise', () => {
+    const times = { start: { dateTime: '2026-11-06T10:00:00Z' }, end: { dateTime: '2026-11-06T11:00:00Z' } };
+    expect(mapEvent({ id: 'e8', colorId: '11', ...times }, calendar)?.color).toBe('#d50000');
+    expect(mapEvent({ id: 'e9', ...times }, calendar)?.color).toBeUndefined();
+    expect(mapEvent({ id: 'e10', colorId: '99', ...times }, calendar)?.color).toBeUndefined();
+  });
 });

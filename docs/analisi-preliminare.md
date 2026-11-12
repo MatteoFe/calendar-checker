@@ -31,7 +31,7 @@ Angular e React sono stati valutati con tre scaffolder di confronto. Preact vinc
 ### Popup del pulsante
 
 - Vista mese, unica vista disponibile.
-- Gli eventi appaiono come chip o pallini colorati secondo il calendario.
+- Gli eventi appaiono come chip o pallini colorati con il colore dell'evento, se impostato, altrimenti con quello del calendario. I colori degli eventi seguono la palette dell'interfaccia attuale di Google Calendar, non quella classica restituita da `/colors`.
 - Il click su un evento apre Google Calendar su quell'evento (`htmlLink`).
 - Si apre subito dai dati in cache e si aggiorna in background.
 

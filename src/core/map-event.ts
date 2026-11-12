@@ -1,3 +1,4 @@
+import { eventColor } from './color';
 import type { CachedCalendar, CalendarEvent, RawCalendarListEntry, RawEvent, RawReminder } from './types';
 
 const DEFAULT_COLOR = '#4285f4';
@@ -34,6 +35,7 @@ export const mapEvent = (raw: RawEvent, calendar: CachedCalendar): CalendarEvent
     end,
     allDay,
     htmlLink: raw.htmlLink ?? '',
+    color: eventColor(raw.colorId),
     responseStatus: raw.attendees?.find((a) => a.self)?.responseStatus,
     reminderMinutes,
   };

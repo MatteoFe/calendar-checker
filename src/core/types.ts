@@ -22,6 +22,7 @@ export interface RawEvent {
   status?: string;
   summary?: string;
   htmlLink?: string;
+  colorId?: string;
   start?: RawEventTime;
   end?: RawEventTime;
   attendees?: { self?: boolean; responseStatus?: string }[];
@@ -45,6 +46,8 @@ export interface CalendarEvent {
   end: string;
   allDay: boolean;
   htmlLink: string;
+  // Color set on the event itself; when missing the calendar color applies
+  color?: string;
   responseStatus?: string;
   reminderMinutes: number[];
 }

@@ -40,7 +40,7 @@ export async function listEvents(calendarId: string, window: SyncWindow, interac
       singleEvents: 'true',
       orderBy: 'startTime',
       maxResults: PAGE_SIZE,
-      fields: 'nextPageToken,items(id,status,summary,htmlLink,start,end,attendees(self,responseStatus),reminders)',
+      fields: 'nextPageToken,items(id,status,summary,htmlLink,colorId,start,end,attendees(self,responseStatus),reminders)',
     });
     if (pageToken) params.set('pageToken', pageToken);
     const data = await apiGet<{ items?: RawEvent[]; nextPageToken?: string }>(

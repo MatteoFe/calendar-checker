@@ -53,7 +53,7 @@ const isDeclined = (event: CalendarEvent): boolean => event.responseStatus === '
 const isPast = (event: CalendarEvent): boolean => eventEndMs(event) <= Date.now();
 
 const Chip = ({ event }: { event: CalendarEvent }) => {
-  const color = colorOf(event.calendarId);
+  const color = event.color ?? colorOf(event.calendarId);
   const faded = isDeclined(event) || isPast(event);
   return (
     <a
