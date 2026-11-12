@@ -2,9 +2,9 @@ import { describe, expect, it } from 'vitest';
 import { syncWindow } from './sync-window';
 
 describe('syncWindow', () => {
-  it('starts on the first day of the current month', () => {
+  it('starts on the first day shown by the current month grid', () => {
     const { timeMin } = syncWindow(new Date(2026, 10, 18, 15, 30));
-    expect(timeMin).toBe(new Date(2026, 10, 1).toISOString());
+    expect(timeMin).toBe(new Date(2026, 9, 26).toISOString());
   });
 
   it('ends 60 days after now, across month and year boundaries', () => {

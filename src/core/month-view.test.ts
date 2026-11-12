@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { chipLabel } from './format';
 import { readableTextColor } from './color';
-import { dayKey, eventsByDay, isMonthCovered, monthGrid, shiftMonth } from './month-view';
+import { dayKey, eventsByDay, gridBounds, isMonthCovered, monthGrid, shiftMonth } from './month-view';
 import type { CalendarEvent } from './types';
 
 const ev = (partial: Partial<CalendarEvent> & { id: string }): CalendarEvent => ({
@@ -52,10 +52,19 @@ describe('eventsByDay', () => {
   });
 });
 
-describe('isMonthCovered', () => {
-  const window = { timeMin: new Date(2026, 10, 1).toISOString(), timeMax: new Date(2027, 0, 4, 12).toISOString() };
+describe('gridBounds', () => {
+  it('spans the whole grid, adjacent months included', () => {
+    expect(gridBounds(2026, 10)).toEqual({
+      timeMin: new Date(2026, 9, 26).toISOString(),
+      timeMax: new Date(2026, 11, 7).toISOString(),
+    });
+  });
+});
 
-  it('is true when the month is entirely inside the window', () => {
+describe('isMonthCovered', () => {
+  const window = { timeMin: new Date(2026, 9, 26).toISOString(), timeMax: new Date(2027, 0, 4, 12).toISOString() };
+
+  it('is true when the month grid is entirely inside the window', () => {
     expect(isMonthCovered(window, 2026, 10)).toBe(true);
     expect(isMonthCovered(window, 2026, 11)).toBe(true);
   });

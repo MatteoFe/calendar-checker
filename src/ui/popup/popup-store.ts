@@ -1,5 +1,5 @@
 import { computed, effect, signal } from '@preact/signals';
-import { eventsByDay, isMonthCovered, monthBounds, monthGrid } from '../../core/month-view';
+import { eventsByDay, gridBounds, isMonthCovered, monthGrid } from '../../core/month-view';
 import { firedEntries } from '../../core/reminders';
 import { syncWindow } from '../../core/sync-window';
 import type { CalendarEvent, ReminderState, SyncCache } from '../../core/types';
@@ -55,7 +55,7 @@ async function load(): Promise<void> {
 
 async function fetchRemoteMonth(year: number, month: number): Promise<void> {
   try {
-    const events = await requestRange(monthBounds(year, month));
+    const events = await requestRange(gridBounds(year, month));
     remote.value = { ...remote.peek(), [monthId(year, month)]: events };
   } catch (error) {
     console.warn('Cannot load month', error);

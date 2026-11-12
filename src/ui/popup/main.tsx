@@ -76,7 +76,7 @@ const Chip = ({ event }: { event: CalendarEvent }) => {
 };
 
 const DayCell = ({ day, todayKey }: { day: GridDay; todayKey: string }) => {
-  const events = day.inMonth ? (byDay.value.get(day.key) ?? []) : [];
+  const events = byDay.value.get(day.key) ?? [];
   const hidden = events.length - MAX_CHIPS;
   const isToday = day.key === todayKey;
   const isSelected = selectedDay.value === day.key;
