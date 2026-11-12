@@ -4,6 +4,12 @@ A lightweight Chrome extension (Manifest V3) that shows your Google Calendar eve
 
 > Personal project, not published on the Chrome Web Store. The UI is in Italian.
 
+![Month view in the toolbar popup, with the next-event badge on the icon](screenshots/popup.png)
+
+| Reminder | Snooze options |
+| --- | --- |
+| ![Reminder window](screenshots/reminder.png) | ![Reminder window with snooze options](screenshots/reminder-snooze.png) |
+
 ## Features
 
 - **Month view** in the toolbar popup, using each calendar's own color. Clicking an event opens it in Google Calendar.
